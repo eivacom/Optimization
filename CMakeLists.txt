@@ -1,5 +1,5 @@
 # A simple CMakeLists file that enables the Optimization library to be conveniently imported by other CMake projects using
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.24)
 
 # PROJECT CONFIGURATION
 project(Optimization LANGUAGES CXX VERSION 1.0.0)
@@ -52,7 +52,12 @@ set(OPTIMIZATION_HDRS
 message(STATUS "Found ${PROJECT_NAME} header files:\n ${OPTIMIZATION_HDRS}")
 
 # List the complete set of header files as source files.
-target_sources(${PROJECT_NAME} INTERFACE ${OPTIMIZATION_HDRS})
+target_sources(${PROJECT_NAME} INTERFACE ${OPTIMIZATION_HDRS}
+    PUBLIC FILE_SET HEADERS 
+    BASE_DIRS ${OPTIMIZATION_INCLUDE_DIR}
+    FILES ${OPTIMIZATION_HDRS})
+
+set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${OPTIMIZATION_HDRS}")
 
 # Export Optimization library
 
